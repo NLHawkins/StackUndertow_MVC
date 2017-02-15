@@ -20,7 +20,12 @@ namespace StackUndertow_MVC.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<UpVote> UpVotes { get; set; }
+
         public ApplicationDbContext()
+
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
