@@ -10,18 +10,18 @@ using StackUndertow_MVC.Models;
 
 namespace StackUndertow_MVC.Controllers
 {
-    public class QuestionsController : Controller
+    public class QuestionController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Questions
+        // GET: Question
         public ActionResult Index()
         {
             var questions = db.Questions.Include(q => q.QOwner);
             return View(questions.ToList());
         }
 
-        // GET: Questions/Details/5
+        // GET: Question/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,13 +36,15 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // GET: Questions/Create
+        // GET: Question/Create
         public ActionResult Create()
         {
-           
             return View();
         }
 
+        // POST: Question/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,QTitle,QText,QOwnerId")] Question question)
@@ -57,7 +59,7 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // GET: Questions/Edit/5
+        // GET: Question/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -72,7 +74,7 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // POST: Questions/Edit/5
+        // POST: Question/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -88,7 +90,7 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // GET: Questions/Delete/5
+        // GET: Question/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -103,7 +105,7 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // POST: Questions/Delete/5
+        // POST: Question/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
