@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StackUndertow_MVC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace StackUndertow_MVC.Controllers
 {
@@ -14,21 +15,17 @@ namespace StackUndertow_MVC.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Question
+        
         public ActionResult Index()
         {
-            var questions = db.Questions.Include(q => q.QOwner);
-            return View(questions.ToList());
+            ViewBag.AllQuestions = db.Questions.ToList();
+            return View();
         }
 
         // GET: Question/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int QId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Question question = db.Questions.Find(id);
+            Question question = db.Questions.Find(QId);
             if (question == null)
             {
                 return HttpNotFound();
@@ -36,9 +33,14 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // GET: Question/Create
+
         public ActionResult Create()
         {
+            var userId = User.Identity.GetUserId();
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
 
@@ -47,10 +49,14 @@ namespace StackUndertow_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,QTitle,QText,QOwnerId")] Question question)
+        public ActionResult Create([Bind(Include = "QTitle,QText")] Question question)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                var userName = User.Identity.GetUserName();
+                question.QOwnerName = userName;
+                question.QOwnerId = userId;
                 db.Questions.Add(question);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,7 +65,7 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // GET: Question/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -90,13 +96,14 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // GET: Question/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Question question = db.Questions.Find(id);
             if (question == null)
             {
@@ -105,7 +112,7 @@ namespace StackUndertow_MVC.Controllers
             return View(question);
         }
 
-        // POST: Question/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

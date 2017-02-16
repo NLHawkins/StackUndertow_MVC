@@ -4,39 +4,24 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>-Questions-</h2>
 
-<div>
-    <h4>Question</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.QOwner.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QOwner.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QText)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QText)
-        </dd>
-
-    </dl>
+<div class="container">
+    <div>
+        <p>
+            <h3 class="post-title">
+                @Model.QTitle
+            </h3>
+        </p>
+        <p>
+            <h5 class="post-title">
+                @Model.QText
+            </h5>
+        </p>
+        <p class="post-meta">
+            Asked by @Html.RouteLink((string)Model.QOwnerName, new { Qid = Model.QOwnerId })
+        </p>
+        <p> @Html.ActionLink("Answer This Question", "Create", "Answer", new { Qid = Model.Id }, new { }) | @Html.ActionLink("Back to List", "Index") </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

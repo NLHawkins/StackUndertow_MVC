@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -206,6 +207,18 @@
     <Compile Include="Migrations\201702151901483_Initial.cs" />
     <Compile Include="Migrations\201702151901483_Initial.Designer.cs">
       <DependentUpon>201702151901483_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702152221092_justtosee.cs" />
+    <Compile Include="Migrations\201702152221092_justtosee.Designer.cs">
+      <DependentUpon>201702152221092_justtosee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702152235015_answerTOAnswers.cs" />
+    <Compile Include="Migrations\201702152235015_answerTOAnswers.Designer.cs">
+      <DependentUpon>201702152235015_answerTOAnswers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702152240580_usernamesONModel.cs" />
+    <Compile Include="Migrations\201702152240580_usernamesONModel.Designer.cs">
+      <DependentUpon>201702152240580_usernamesONModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -278,10 +291,10 @@
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Answer\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Answer\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +308,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702151901483_Initial.resx">
       <DependentUpon>201702151901483_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702152221092_justtosee.resx">
+      <DependentUpon>201702152221092_justtosee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702152235015_answerTOAnswers.resx">
+      <DependentUpon>201702152235015_answerTOAnswers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702152240580_usernamesONModel.resx">
+      <DependentUpon>201702152240580_usernamesONModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

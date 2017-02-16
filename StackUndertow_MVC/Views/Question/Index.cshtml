@@ -4,42 +4,22 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>-Questions-</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.QOwner.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QText)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+            @foreach (var q in ViewBag.AllQuestions)
+            {
+                <div>
+                    <p>
+                        <h3 class="post-title">
+                            <span><span class="badge">@q.Answers.Count</span></span>
+                             | @Html.ActionLink((string)q.QTitle,"Details", new { QId = q.Id })
+                        </h3>  
+                    </p>
+                    <p class="post-meta">Asked by @Html.RouteLink((string)q.QOwnerName, new { Id = q.QOwnerId }) |
+                    @Html.ActionLink("Answer This Question", "Create", "Answer", new { QId = q.Id }, new { })</p>
+                </div>
+                <hr/>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.QOwner.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QText)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+            }
+</div>
