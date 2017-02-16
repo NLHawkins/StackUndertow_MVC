@@ -16,7 +16,7 @@
                              | @Html.ActionLink((string)q.QTitle,"Details", new { QId = q.Id })
                         </h3>  
                     </p>
-                    <p class="post-meta">Asked by @Html.RouteLink((string)q.QOwnerName, new { Id = q.QOwnerId }) |
+                    <p class="post-meta">Asked by @Html.ActionLink((string)q.QOwnerName,"Profile","User", new { Id = q.QOwnerId }, new { }) |
                     @Html.ActionLink("Answer This Question", "Create", "Answer", new { QId = q.Id }, new { })</p>
                 </div>
                 <hr/>

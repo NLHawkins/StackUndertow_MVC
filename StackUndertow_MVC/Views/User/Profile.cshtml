@@ -1,0 +1,45 @@
+﻿@model StackUndertow_MVC.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+<div class="container">
+
+    <p>
+        <h2>
+            @ViewBag.Person.UserName | Score: @ViewBag.UpVotesUser
+        </h2>
+    </p>
+    
+    <h3>-Your Questions-</h3>
+
+    @foreach (var q in ViewBag.Questions)
+            {
+        <p>
+            <h3 class="post-title">
+                <span><span class="badge">@q.Answers.Count Answer</span></span>
+                | @Html.ActionLink((string)q.QText, "Details", "Question", new { QId = q.Id }, new { })
+            </h3>
+        </p>
+            <hr />
+             }
+    
+    <h3>-Your Answers-</h3>
+    @foreach (var a in ViewBag.Answers)
+            {
+        <div>
+            <p>
+                <h3 class="post-title">
+                    <span><span class="badge">@a.UpVotes.Count UpVotes</span></span>
+                    | @Html.ActionLink((string)a.AText, "Details", "Answer", new { QId = a.QuestionId }, new { })
+                </h3>
+            </p>
+
+        </div>
+        <hr />
+    }
+
+</div>
+

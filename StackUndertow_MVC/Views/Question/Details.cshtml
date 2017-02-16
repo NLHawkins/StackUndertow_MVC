@@ -23,5 +23,21 @@
         </p>
         <p> @Html.ActionLink("Answer This Question", "Create", "Answer", new { Qid = Model.Id }, new { }) | @Html.ActionLink("Back to List", "Index") </p>
     </div>
+    @foreach (var a in ViewBag.Answers)
+    {
+        <div>
+            <div>
+                    <h3 class="post-title">
+                        <span><span class="badge">@a.UpVotes.Count UpVotes</span></span>
+                        | @Html.ActionLink((string)a.AText, "Details", "Answer", new { QId = a.QuestionId }, new { })
+                    </h3>
+                    <p> Answered by @a.Owner.UserName.ToString()</p> | <p> @Html.ActionLink("UpVote This Answer", "UpVote", "Answer", new { AId = a.Id }, new { }) | @Html.ActionLink("Back to Questions", "Index") </p>
+            </div>
+            <p class="post-meta">
+                Asked by @Html.RouteLink((string)Model.QOwnerName, new { Qid = Model.QOwnerId })
+            </p>
+            <p> @Html.ActionLink("Answer This Question", "Create", "Answer", new { Qid = Model.Id }, new { }) | @Html.ActionLink("Back to List", "Index") </p>
+        </div>
+    }
 </div>
 

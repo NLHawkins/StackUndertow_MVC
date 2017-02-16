@@ -292,10 +292,11 @@
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Answer\Create.cshtml" />
+    <Content Include="Views\Answer\Index.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

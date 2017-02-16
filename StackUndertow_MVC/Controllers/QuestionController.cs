@@ -30,6 +30,7 @@ namespace StackUndertow_MVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Answers = db.Answers.Where(i => i.QuestionId == QId).ToList();
             return View(question);
         }
 

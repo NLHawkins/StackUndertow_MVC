@@ -1,0 +1,28 @@
+﻿@model StackUndertow_MVC.Models.Answer
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>-Questions-</h2>
+
+<div class="container">
+    @foreach (var a in ViewBag.Answers)
+            {
+        <div>
+            <p>
+                <h3 class="post-title">
+                    <span><span class="badge">4</span></span>
+                    | @Html.ActionLink("UpVote", "UpVote", new { QId = a.QuestionId })
+                </h3>
+            </p>
+            <p>
+                <h5>
+                    @a.Atext.ToString()
+                </h5>
+            </p>
+        </div>
+            <hr />
+    }
+</div>
+
