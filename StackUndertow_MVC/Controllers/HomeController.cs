@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,12 @@ namespace StackUndertow_MVC.Controllers
     {
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.LoggedIn = false;
+            if (userId != null)
+            {
+                ViewBag.LoggedIn = true;
+            }
             return View();
         }
 

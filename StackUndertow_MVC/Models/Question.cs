@@ -15,6 +15,7 @@ namespace StackUndertow_MVC.Models
         [DisplayName("What's Your Question?")]
         public string QText { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
+        public bool FinalAnswer { get; set; }
 
         public string QOwnerName { get; set; }
         public string QOwnerId { get; set; }

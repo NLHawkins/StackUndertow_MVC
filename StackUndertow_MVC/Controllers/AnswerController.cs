@@ -34,22 +34,54 @@ namespace StackUndertow_MVC.Controllers
         public ActionResult Create([Bind(Include = "AText, QuestionId")] Answer answer)
         {
 
-                var userId = User.Identity.GetUserId();
-                var userName = User.Identity.GetUserName();
-                answer.AOwnerName = userName;
-                db.Answers.Add(answer);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { QId = answer.QuestionId });
+            var userId = User.Identity.GetUserId();
+            var userName = User.Identity.GetUserName();
+            answer.AOwnerId = userId;
+            answer.AOwnerName = userName;
+            db.Answers.Add(answer);
+            db.SaveChanges();
+            return RedirectToAction("Details","Question", new { QId = answer.QuestionId });
         }
 
         public ActionResult UpVote(int AId)
         {
+
+            var userId = User.Identity.GetUserId();
             var aInstance = db.Answers.Where(i => i.Id == AId).FirstOrDefault();
             var upvote = new UpVote();
-            upvote.AnswerId = AId;
-            upvote.VoterId = User.Identity.GetUserId();
-            db.UpVotes.Add(upvote);
-            db.SaveChanges();
+            var upVoterCk = db.Answers.Where(i => i.AOwnerId == userId).Any();
+            var upVoterTwiceCk = db.UpVotes.Where(i => i.Answer.Id == AId && i.VoterId == userId).Any();                  
+            if (!upVoterCk && !upVoterTwiceCk)
+            {
+                aInstance.AOwner.UScore += 10;
+                aInstance.AScore++;
+                upvote.AnswerId = AId;
+                upvote.VoterId = User.Identity.GetUserId();
+                db.UpVotes.Add(upvote);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", "Question", new { QId = aInstance.QuestionId });
+        }
+
+        public ActionResult DownVote(int AId)
+        {
+
+            var userId = User.Identity.GetUserId();
+            var userInstance = db.Users.Where(i => i.Id == userId).FirstOrDefault();
+            var aInstance = db.Answers.Where(i => i.Id == AId).FirstOrDefault();
+            var upvote = new UpVote();
+            var upVoterCk = db.Answers.Where(i => i.AOwnerId == userId).Any();
+            var upVoterTwiceCk = db.UpVotes.Where(i => i.Answer.Id == AId && i.VoterId == userId).Any();
+            if (!upVoterCk && !upVoterTwiceCk)
+            {
+                aInstance.AOwner.UScore -= 5;
+                aInstance.AScore--;
+                userInstance.UScore--;
+                upvote.AnswerId = AId;
+                upvote.VoterId = User.Identity.GetUserId();
+                db.UpVotes.Add(upvote);
+                db.SaveChanges();
+            }
             return RedirectToAction("Details", "Question", new { QId = aInstance.QuestionId });
         }
 

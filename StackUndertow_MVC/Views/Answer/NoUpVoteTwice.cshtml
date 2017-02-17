@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "NoUpVoteTwice";
+}
+
+<h2>You've already upvoted this answer!</h2>
+
+<p>
+    @Html.ActionLink("Go Back", "Details", new { QId = q.Id })
+</p>
+

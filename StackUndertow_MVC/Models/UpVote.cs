@@ -18,5 +18,7 @@ namespace StackUndertow_MVC.Models
         [ForeignKey("AnswerId")]
         public virtual  Answer Answer { get; set; }
 
+        public string VoteType { get; set; }
+
     }
 }

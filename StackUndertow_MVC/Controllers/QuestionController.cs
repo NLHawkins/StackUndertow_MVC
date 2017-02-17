@@ -30,7 +30,17 @@ namespace StackUndertow_MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Answers = db.Answers.Where(i => i.QuestionId == QId).ToList();
+
+            var userId = User.Identity.GetUserId();
+            ViewBag.UserId = User.Identity.GetUserId();
+            var Answers = db.Answers.Where(i => i.QuestionId == QId).
+                                            ToList().OrderByDescending(s=>s.AScore);
+            ViewBag.Answers = db.Answers.Where(i => i.QuestionId == QId).
+                                            ToList().OrderByDescending(s => s.AScore);
+            var TopAnswer = Answers.First();
+            ViewBag.TopAnswer = Answers.First();
+            var OtherAnswers = Answers.Skip(1);
+            ViewBag.OtherAnswers = Answers.Skip(1);
             return View(question);
         }
 
@@ -53,17 +63,45 @@ namespace StackUndertow_MVC.Controllers
         public ActionResult Create([Bind(Include = "QTitle,QText")] Question question)
         {
             if (ModelState.IsValid)
-            {
+            {   
+                
                 var userId = User.Identity.GetUserId();
                 var userName = User.Identity.GetUserName();
+                var userInstance = db.Users.Where(i => i.Id == userId).FirstOrDefault();
                 question.QOwnerName = userName;
                 question.QOwnerId = userId;
+                question.FinalAnswer = false;
+                userInstance.UScore += 5;
                 db.Questions.Add(question);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(question);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Choose(int Qid, int Aid)
+        {
+            if (Qid == 0 || Aid == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Question question = db.Questions.Find(Qid);
+            Answer answer = db.Answers.Find(Aid);
+            ApplicationUser winner = db.Users.Where(i => i.Id == answer.AOwnerId).FirstOrDefault();
+            if (question == null)
+            {
+                return HttpNotFound();
+            }
+
+            question.FinalAnswer = true;
+            answer.Chosen = true;
+            winner.UScore += 100;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [Authorize]
