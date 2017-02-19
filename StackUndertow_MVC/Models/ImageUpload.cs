@@ -7,14 +7,6 @@ using System.Web;
 
 namespace StackUndertow_MVC.Models
 {
-    public class ImageUploadViewModel
-    {
-        [Required]
-        public HttpPostedFile File { get; set; }
-        public string UserId { get; set; }
-        public int QId { get; set; }
-        public int AId { get; set; }
-    }
 
     public class ImageUpload
     {

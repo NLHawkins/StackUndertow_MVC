@@ -12,6 +12,29 @@ namespace StackUndertow_MVC.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
-       
+        public ActionResult Upload()
+        {
+            var uploadViewModel = new ImageUploadViewModel();
+            return View(uploadViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Upload(ImageUploadViewModel formData)
+        {
+            var uploadedFile = Request.Files[0];
+            string filename = $"{DateTime.Now.Ticks}{uploadedFile.FileName}";
+            var serverPath = Server.MapPath(@"~\Uploads");
+            var fullPath = Path.Combine(serverPath, filename);
+            uploadedFile.SaveAs(fullPath);
+
+            var uploadModel = new ImageUpload
+            {
+                File = filename
+            };
+            db.Files.Add(uploadModel);
+            db.SaveChanges();
+            return View();
+        }
     }
 }
+    
