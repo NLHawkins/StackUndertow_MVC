@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace StackUndertow_MVC.Models
 {
@@ -11,6 +12,8 @@ namespace StackUndertow_MVC.Models
     {
 
         public int UScore { get; set; }
+        public virtual ICollection<ImageUpload> File { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -27,6 +30,8 @@ namespace StackUndertow_MVC.Models
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<UpVote> UpVotes { get; set; }
+        public DbSet<ImageUpload> Files { get; set; }
+
 
         public ApplicationDbContext()
 

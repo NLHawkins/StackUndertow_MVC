@@ -49,9 +49,17 @@ namespace StackUndertow_MVC.Controllers
             var userId = User.Identity.GetUserId();
             var aInstance = db.Answers.Where(i => i.Id == AId).FirstOrDefault();
             var upvote = new UpVote();
-            var upVoterCk = db.Answers.Where(i => i.AOwnerId == userId).Any();
+            bool notOwnerCk = new bool();
+            if (aInstance.AOwnerId == userId)
+            {
+                notOwnerCk = false;
+            }
+            else
+            {
+                notOwnerCk = true;
+            }
             var upVoterTwiceCk = db.UpVotes.Where(i => i.Answer.Id == AId && i.VoterId == userId).Any();                  
-            if (!upVoterCk && !upVoterTwiceCk)
+            if (notOwnerCk && !upVoterTwiceCk)
             {
                 aInstance.AOwner.UScore += 10;
                 aInstance.AScore++;
@@ -70,9 +78,17 @@ namespace StackUndertow_MVC.Controllers
             var userInstance = db.Users.Where(i => i.Id == userId).FirstOrDefault();
             var aInstance = db.Answers.Where(i => i.Id == AId).FirstOrDefault();
             var upvote = new UpVote();
-            var upVoterCk = db.Answers.Where(i => i.AOwnerId == userId).Any();
+            bool notOwnerCk = new bool();
+            if (aInstance.AOwnerId == userId)
+            {
+                notOwnerCk = false;
+            }
+            else
+            {
+                notOwnerCk = true;
+            }
             var upVoterTwiceCk = db.UpVotes.Where(i => i.Answer.Id == AId && i.VoterId == userId).Any();
-            if (!upVoterCk && !upVoterTwiceCk)
+            if (notOwnerCk && !upVoterTwiceCk)
             {
                 aInstance.AOwner.UScore -= 5;
                 aInstance.AScore--;

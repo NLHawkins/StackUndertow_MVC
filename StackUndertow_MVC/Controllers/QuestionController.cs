@@ -26,21 +26,12 @@ namespace StackUndertow_MVC.Controllers
         public ActionResult Details(int QId)
         {
             Question question = db.Questions.Find(QId);
+            var userInstance = db.Users.Where(i => i.Id == question.QOwnerId);
             if (question == null)
             {
                 return HttpNotFound();
             }
 
-            var userId = User.Identity.GetUserId();
-            ViewBag.UserId = User.Identity.GetUserId();
-            var Answers = db.Answers.Where(i => i.QuestionId == QId).
-                                            ToList().OrderByDescending(s=>s.AScore);
-            ViewBag.Answers = db.Answers.Where(i => i.QuestionId == QId).
-                                            ToList().OrderByDescending(s => s.AScore);
-            var TopAnswer = Answers.First();
-            ViewBag.TopAnswer = Answers.First();
-            var OtherAnswers = Answers.Skip(1);
-            ViewBag.OtherAnswers = Answers.Skip(1);
             return View(question);
         }
 

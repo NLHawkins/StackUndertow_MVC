@@ -18,6 +18,8 @@ namespace StackUndertow_MVC.Models
         public string AOwnerName { get; set; }
         public int AScore { get; set; }
         public bool Chosen { get; set; }
+        public virtual ICollection<ImageUploadViewModel> File { get; set; }
+
 
         public string AOwnerId { get; set; }
         [ForeignKey("AOwnerId")]

@@ -2,9 +2,13 @@
 
 @{
     ViewBag.Title = "Details";
+    var orderedAnswers = Model.GetOrderedAnswers().ToList();
+    
 }
 
-<h2>@Html.RouteLink((string)Model.QOwnerName + "'s", new { Qid = Model.QOwnerId }) Question</h2>
+<h2>
+    @Html.ActionLink((string)Model.QOwnerName + "'s",
+    "Profile","User", new { id = Model.QOwnerId },new { }) Question</h2>
 
 <div class="container">
     <div class="row">
@@ -26,74 +30,87 @@
 
         </div>
     </div>
-    <hr/>
+    <hr />
     @if (!Model.FinalAnswer)
     {
-        if (ViewBag.Answers != null)
+
+        if (Model.Answers.Any())
         {
+            var topAnswer = Model.Answers.FirstOrDefault();
+            var otherAnswers = Model.Answers.Skip(1);
+
             <div class="question-answers">
                 <div class="row">
                     <div class="top-answer">
                         <div class="col-lg-2">
                             <div class="row-label">
-                                <p><h3>-Top Answer-</h3></p>
-                                <p><h4>Submitted by @ViewBag.TopAnswer.AOwnerName</h4></p>
+                                <p><h3 class="text-center">-Top Answer-</h3></p>
+                                <p><h4 class="text-center">Submitted by </h4></p>
+                                <p><h4 class="text-center">@Html.ActionLink((string)topAnswer.AOwnerName, "Profile", "User", new { id = topAnswer.AOwnerId }, new { })</h4></p>
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div class="row-badge">
-                                <span class="badge">@ViewBag.TopAnswer.AScore</span>
+                                <br/>
+                                <span class="badge">@topAnswer.AScore</span>
                                 <div class="btn-group-vertical btn-group-sm" role="group" aria-label="...">
-                                    @Html.ActionLink("UpVote",
-  "UpVote", "Answer",
-  new { AId = ViewBag.TopAnswer.Id },
-  new { @class = "btn btn-default" })
+                                    
+                                        @Html.ActionLink("UpVote",
+                                                      "UpVote", "Answer",
+                                                      new { AId = topAnswer.Id },
+                                                      new { @class = "btn btn-success" })
                                     @Html.ActionLink("DownVote",
-  "DownVote", "Answer",
-  new { AId = ViewBag.TopAnswer.Id },
-  new { @class = "btn btn-default" })
+                                                      "DownVote", "Answer",
+                                                      new { AId = topAnswer.Id },
+                                                      new { @class = "btn btn-danger" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
                             <div class="row-body">
-                                <h3>@ViewBag.TopAnswer.AText</h3>
+                                <br/>
+                                <h3>@topAnswer.AText</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <br/>
-            <br/>
-            if (ViewBag.OtherAnswers != null)
+            <br />
+            <br />
+            if (otherAnswers != null)
             {
-                foreach (var a in ViewBag.OtherAnswers)
+                foreach (var a in otherAnswers)
                 {
                     <div class="question-answers">
                         <div class="row">
                             <div class="top-answer">
                                 <div class="col-lg-2">
                                     <div class="row-label">
-                                        <p><h4>Submitted by @a.AOwnerName</h4></p>
+                                        <br/>
+                                        <p><h4 class="text-center">Submitted by</h4></p>
+                                        <p><h4 class="text-center">@Html.ActionLink((string)@a.AOwnerName, "Profile", "User", new { id = a.AOwnerId }, new { })</h4></p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="row-badge">
+                                        <br />
                                         <span class="badge">@a.AScore</span>
                                         <div class="btn-group-vertical btn-group-sm" role="group" aria-label="...">
+
                                             @Html.ActionLink("UpVote",
-  "UpVote", "Answer",
-  new { AId = a.Id },
-  new { @class = "btn btn-default" })
+                                                      "UpVote", "Answer",
+                                                      new { AId = a.Id },
+                                                      new { @class = "btn btn-success" })
                                             @Html.ActionLink("DownVote",
-  "DownVote", "Answer",
-  new { AId = a.Id },
-  new { @class = "btn btn-default" })
+                                                      "DownVote", "Answer",
+                                                      new { AId = a.Id },
+                                                      new { @class = "btn btn-danger" })
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row-body">
+                                        <br/>
                                         <h3>@a.AText</h3>
                                     </div>
                                 </div>
@@ -102,12 +119,10 @@
                     </div>
                 }
             }
-            else
-            {
-                <h2>No Answers Yet! Click Above To Submit One!</h2>
-            }
-
-
+        }
+        else
+        {
+            <h2>No Answers Yet! Click Above To Submit One!</h2>
         }
     }
 </div>

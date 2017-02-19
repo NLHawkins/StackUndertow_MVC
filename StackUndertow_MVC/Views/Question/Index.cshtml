@@ -12,7 +12,14 @@
                 <div>
                     <p>
                         <h3 class="post-title">
-                            <span><span class="badge">@q.Answers.Count</span></span>
+                            @if (q.Answers.Count == 0)
+                            {
+                                <span><span class="badge badge-info">@q.Answers.Count</span></span>
+                            }
+                            else if(q.Answers.Count > 0)
+                            {
+                                <span><span class="badge badge-success">@q.Answers.Count</span></span>
+                            }
                              | @Html.ActionLink((string)q.QTitle,"Details", new { QId = q.Id })
                         </h3>  
                     </p>

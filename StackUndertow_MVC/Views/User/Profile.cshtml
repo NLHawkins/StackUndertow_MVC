@@ -9,7 +9,7 @@
 
     <p>
         <h2>
-            @ViewBag.Person.UserName | Score: @ViewBag.UpVotesUser
+            @ViewBag.Person.UserName | Score: @ViewBag.Person.UScore
         </h2>
     </p>
     
@@ -19,7 +19,7 @@
             {
         <p>
             <h3 class="post-title">
-                <span><span class="badge">@q.Answers.Count Answer</span></span>
+                <span><span class="badge badge-info">@q.Answers.Count Answers</span></span>
                 | @Html.ActionLink((string)q.QText, "Details", "Question", new { QId = q.Id }, new { })
             </h3>
         </p>
@@ -32,7 +32,7 @@
         <div>
             <p>
                 <h3 class="post-title">
-                    <span><span class="badge">@a.UpVotes.Count UpVotes</span></span>
+                    <span><span class="badge badge-info">@a.AScore</span></span>
                     | @Html.ActionLink((string)a.AText, "Details", "Answer", new { QId = a.QuestionId }, new { })
                 </h3>
             </p>

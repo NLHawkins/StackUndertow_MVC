@@ -15,12 +15,23 @@ namespace StackUndertow_MVC.Models
         [DisplayName("What's Your Question?")]
         public string QText { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<ImageUploadViewModel> File { get; set; }
+
+        public IOrderedEnumerable<Answer> GetOrderedAnswers ()
+    {
+            var orderedAnswers = Answers.ToList().OrderByDescending(s => s.AScore);
+            return orderedAnswers;
+    }
+
         public bool FinalAnswer { get; set; }
 
         public string QOwnerName { get; set; }
         public string QOwnerId { get; set; }
         [ForeignKey("QOwnerId")]
         public virtual ApplicationUser QOwner { get; set; }
+
+        
+
 
     }
 }
