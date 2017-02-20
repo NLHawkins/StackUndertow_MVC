@@ -1,0 +1,57 @@
+﻿@model StackUndertow_MVC.Models.Answer
+@{
+    ViewBag.Title = "Details";
+
+}
+
+<h2>Details</h2>
+
+<div class="question-answers">
+    <div class="row">
+        <div class="top-answer">
+            <div class="col-lg-2">
+                <div class="row-label">
+                    <p><h3 class="text-center">-Answer-</h3></p>
+                    <p><h4 class="text-center">Submitted by </h4></p>
+                    <p><h4 class="text-center">@Html.ActionLink((string)Model.AOwnerName, "Profile", "User", new { id = Model.AOwnerId }, new { })</h4></p>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="row-badge">
+                    <br />
+                    <span class="badge">@Model.AScore</span>
+                    <div class="btn-group-vertical btn-group-sm" role="group" aria-label="...">
+
+                        @Html.ActionLink("UpVote",
+                                                      "UpVote", "Answer",
+                                                      new { AId = Model.Id },
+                                                      new { @class = "btn btn-success" })
+                        @Html.ActionLink("DownVote",
+                                                      "DownVote", "Answer",
+                                                      new { AId = Model.Id },
+                                                      new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="row-body">
+                    <br />
+                    <h3>@Model.AText</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.File != null)
+    {
+        var orderedUploads = Model.File.OrderByDescending(c => c.Created).ToList();
+        var currentImage = orderedUploads[0];
+
+        <div class="row">
+            <div class="col-md-8">
+                <img class="thumb" src="@currentImage.FilePath"/>
+            </div>
+        </div>
+    }
+    
+</div>
+

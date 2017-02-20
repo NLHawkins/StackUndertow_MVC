@@ -29,6 +29,19 @@ namespace StackUndertow_MVC.Controllers
             return View();
         }
 
+
+
+        public ActionResult Details(int AId)
+        {
+            Answer answer = db.Answers.Find(AId);
+            var userInstance = db.Users.Where(i => i.Id == answer.AOwnerId);
+            if (answer == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(answer);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AText, QuestionId")] Answer answer)
@@ -40,7 +53,7 @@ namespace StackUndertow_MVC.Controllers
             answer.AOwnerName = userName;
             db.Answers.Add(answer);
             db.SaveChanges();
-            return RedirectToAction("Details","Question", new { QId = answer.QuestionId });
+            return RedirectToAction("UploadAPic","Upload", new { AId = answer.Id });
         }
 
         public ActionResult UpVote(int AId)

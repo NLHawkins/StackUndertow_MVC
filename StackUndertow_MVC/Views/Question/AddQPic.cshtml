@@ -1,0 +1,39 @@
+﻿@model StackUndertow_MVC.Models.Question
+
+@{
+    ViewBag.Title = "AddQPic";
+    var orderedUploads = Model.File.ToList().OrderByDescending(c => c.Created);
+    var orderedUploadList = orderedUploads.ToList();
+    var latestUpload = orderedUploadList[0];
+}
+
+<h2>AddQPic</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            @using (Html.BeginForm("UploadProfilePic", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" name="QId" value="@Model.Id" />
+                <p>
+                    <input type="file" name="File" class="form-control" />
+                </p>
+                <p>
+                    <input type="submit" value="Upload File" class="btn btn-warning" />
+                </p>
+            }
+        </div>
+        <div class="col-lg-8">
+            <div class="col-md-3">
+                <img class="thumb" src="@latestUpload.FilePath" />
+            </div>
+        </div>
+        <div class="row text-center">
+            <span>
+                @Html.ActionLink("Keep Image", "Index", null, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Remove Image", "DeleteImg", "Upload", new { QId = Model.Id }, new { @class = "btn btn-danger" }) |
+                @Html.ActionLink("Choose Another Image", "UploadQPic", "Upload", new { QId = Model.Id }, new { @class = "btn btn-danger" })
+            </span>
+        </div>
+    </div>
+</div>

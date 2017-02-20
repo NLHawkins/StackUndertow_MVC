@@ -8,10 +8,12 @@ using System.Web;
 namespace StackUndertow_MVC.Models
 {
 
+
     public class ImageUpload
     {
         public int Id { get; set; }
         public string File { get; set; }
+        public DateTime Created { get; set; }
 
         public string UserId { get; set; }
         [ForeignKey("UserId")]

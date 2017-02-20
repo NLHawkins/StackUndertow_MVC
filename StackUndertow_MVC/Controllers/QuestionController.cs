@@ -65,6 +65,7 @@ namespace StackUndertow_MVC.Controllers
                 userInstance.UScore += 5;
                 db.Questions.Add(question);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

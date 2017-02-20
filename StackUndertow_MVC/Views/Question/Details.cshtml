@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Details";
     var orderedAnswers = Model.GetOrderedAnswers().ToList();
-    
+    var orderedUploads = Model.File.OrderByDescending(c => c.Created).ToList();
 }
 
 <h2>
@@ -30,14 +30,24 @@
 
         </div>
     </div>
+    @if (Model.File != null)
+    {
+        var currentImage = orderedUploads[0];
+
+        <div class="row">
+            <div class="col-md-8">
+                <img class="thumb" src="@currentImage.FilePath" />
+            </div>
+        </div>
+    }
     <hr />
     @if (!Model.FinalAnswer)
     {
 
         if (Model.Answers.Any())
         {
-            var topAnswer = Model.Answers.FirstOrDefault();
-            var otherAnswers = Model.Answers.Skip(1);
+            var topAnswer = orderedAnswers.FirstOrDefault();
+            var otherAnswers = orderedAnswers.Skip(1);
 
             <div class="question-answers">
                 <div class="row">

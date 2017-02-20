@@ -15,7 +15,7 @@ namespace StackUndertow_MVC.Models
         [DisplayName("What's Your Question?")]
         public string QText { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
-        public virtual ICollection<ImageUploadViewModel> File { get; set; }
+        public virtual ICollection<ImageUpload> File { get; set; }
 
         public IOrderedEnumerable<Answer> GetOrderedAnswers ()
     {

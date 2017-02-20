@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Web.UI.WebControls;
 
 namespace StackUndertow_MVC.Models
 {
@@ -30,7 +32,8 @@ namespace StackUndertow_MVC.Models
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<UpVote> UpVotes { get; set; }
-        public DbSet<ImageUpload> Files { get; set; }
+        public DbSet<ImageUpload> ImageUploads { get; set; }
+
 
 
         public ApplicationDbContext()
@@ -38,6 +41,7 @@ namespace StackUndertow_MVC.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
 
         public static ApplicationDbContext Create()
         {
